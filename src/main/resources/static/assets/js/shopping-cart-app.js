@@ -95,6 +95,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
         
     }
      
+     
     $scope.cart.loadFromLocalStorage();
 	   $scope.order = {
 	        createDate: new Date(),

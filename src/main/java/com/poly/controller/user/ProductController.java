@@ -120,8 +120,9 @@ public class ProductController {
 		
 			List<Product> list = pdao.findByDis();
 			model.addAttribute("items", list);
+
 			PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("productlist");
-			int pagesize = 12;
+			int pagesize = 4;
 			pages = new PagedListHolder<>(list);
 			pages.setPageSize(pagesize);
 			final int goToPage = pageNumber - 1;
@@ -144,23 +145,65 @@ public class ProductController {
 		return "user/product/discount";
 	}
 
-	@RequestMapping("/product/latest")
-	public String latest(Model model, @RequestParam("cid") Optional<Integer> cid) {
+	@RequestMapping("/product/latest/{pageNumber}")
+	public String latest(Model model, @RequestParam("cid") Optional<Integer> cid,HttpServletRequest request,
+			@PathVariable int pageNumber) {
 	
 			List<Product> list = pdao.findByLatest();
 			model.addAttribute("items", list);
 		
+			PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("productlist");
+			int pagesize = 4;
+			pages = new PagedListHolder<>(list);
+			pages.setPageSize(pagesize);
+			final int goToPage = pageNumber - 1;
+			if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+				pages.setPage(goToPage);
+			}
+			request.getSession().setAttribute("productlist", pages);
+			int current = pages.getPage() + 1;
+			int begin = Math.max(1, current - list.size());
+			int end = Math.min(begin + 5, pages.getPageCount());
+			int totalPageCount = pages.getPageCount();
+			String baseUrl = "/product/latest/";
+			model.addAttribute("beginIndex", begin);
+			model.addAttribute("endIndex", end);
+			model.addAttribute("currentIndex", current);
+			model.addAttribute("totalPageCount", totalPageCount);
+			model.addAttribute("baseUrl", baseUrl);
+			model.addAttribute("items", pages);
 		return "user/product/latest";
 	}
 
-	@RequestMapping("/product/special")
+	@RequestMapping("/product/special/{pageNumber}")
 	public String special(Model model, @RequestParam("cid") Optional<Integer> cid,
-			@RequestParam("page") Optional<Integer> page) {
+			HttpServletRequest request,
+			@PathVariable int pageNumber) {
 		
 			List<Product> list = pdao.findBySpecial();
 			model.addAttribute("items", list);
-		
 
+			PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("productlist");
+			int pagesize = 4;
+			pages = new PagedListHolder<>(list);
+			pages.setPageSize(pagesize);
+			final int goToPage = pageNumber - 1;
+			if (goToPage <= pages.getPageCount() && goToPage >= 0) {
+				pages.setPage(goToPage);
+			}
+			request.getSession().setAttribute("productlist", pages);
+			int current = pages.getPage() + 1;
+			int begin = Math.max(1, current - list.size());
+			int end = Math.min(begin + 5, pages.getPageCount());
+			int totalPageCount = pages.getPageCount();
+			String baseUrl = "/product/special/";
+			model.addAttribute("beginIndex", begin);
+			model.addAttribute("endIndex", end);
+			model.addAttribute("currentIndex", current);
+			model.addAttribute("totalPageCount", totalPageCount);
+			model.addAttribute("baseUrl", baseUrl);
+			model.addAttribute("items", pages);
+		
 		return "user/product/special";
 	}
 

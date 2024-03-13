@@ -11,9 +11,7 @@
 		</div>
 		
 		<div class="col-sm-8 col-lg-9 mtb_20">
-		<div class="text-center">
-			<div th:replace="user/layout/_bannerQC.html"></div>
-		</div>
+		
 		
 
 		<div class="card m-b-30 fpheadbox" style=" padding: 10px;">
@@ -28,9 +26,6 @@
 							<a class="box-quicklink__item" th:href="@{/product/list/findByTrademarkId/1?tid=1}"><img th:src="@{|/assets/images/thuonghieu/thuonghieu1.jpg|}"></a>
 						</div>
 						<div class="item text-center">
-							<a class="box-quicklink__item " th:href="@{/product/list/findByTrademarkId/1?tid=2}"><img th:src="@{|/assets/images/thuonghieu/thuonghieu2.jpg|}"></a>
-						</div>
-						<div class="item text-center">
 							<a class="box-quicklink__item" th:href="@{/product/list/findByTrademarkId/1?tid=3}"><img th:src="@{|/assets/images/thuonghieu/thuonghieu3.jpg|}"></a>
 						</div>
 						<div class="item text-center">
@@ -39,10 +34,7 @@
 						<div class="item text-center">
 							<a class="box-quicklink__item" th:href="@{/product/list/findByTrademarkId/1?tid=5}"><img th:src="@{|/assets/images/thuonghieu/thuonghieu5.jpg|}"></a>
 						</div>
-					<!-- 	<div class="item text-center">
-							<a class="box-quicklink__item" th:href="@{/product/list/findByTrademarkId/1?tid=6}"><img th:src="@{|/assets/images/thuonghieu/xiaomi.jpg|}"></a>
-						</div> -->
-						
+					
 					</div>
 				</div>
 			</div>
@@ -56,16 +48,16 @@
 					<button type="button" id="list-view"
 						class="btn btn-default list-view"></button>
 				</div>
-			</div>
+			</div>	
 			
 			<div class="sort-wrapper ">
 				<i >Có [[${sizepro} ]] sản phẩm </i>
 				<label class="control-label" for="input-sort" style="margin-right: 1rem">Sắp xếp theo giá:</label>
 					<a th:href="@{/product/list/desc/1}">Giảm dần</a>
-					<a th:href="@{/product/list/asc/1}">Tăng dần</a>
+					<a th:href="@{/product/list/asc/1}">Tăng dần</a>	
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="product-layout  product-grid  col-md-4 col-sm-6 col-xs-12 " th:each="p:${items.pageList}">
 				<div class="item">
@@ -73,25 +65,25 @@
 						<div class="image product-imageblock">
 							<a th:href="@{|/product/detail/${p.product_id}|}"> 
 								<img th:src="@{|/assets/images/${p.image1}|}"
-								class="img-responsive" />						
+								class="img-responsive" />
 							</a>
 							<div class="button-group text-center">
 								<a th:href="@{|/product/detail/${p.product_id}|}">
-									<div class="quickview"> 								
+									<div class="quickview">
 									</div>
 								</a>
 								<a th:attr="ng-click=@{|cart.add(${p.product_id})|}">
-									<div class="add-to-cart">					
+									<div class="add-to-cart">
 									</div>
 								</a>
 							</div>
-						</div>				
+						</div>
 						<span class="sales__product_new" th:if="${p.lastest} == true">
 				           <img alt="" src="https://cdn-icons-png.flaticon.com/512/179/179452.png">
 				        </span>
 						<span class="sales__product" th:if="${p.distcount} > 0">
 				            <i class="fa fa-bolt" style="font-size:18px"></i> Giảm [[${#numbers.formatDecimal(p.distcount, 1 , 'COMMA',0,'POINT')}]] %
-				        </span>					
+				        </span>
 						<div class="caption product-detail text-center" >
 							<h6 data-name="product_name" class="product-name mt_20">
 								<a href="#" title="Casual Shirt With Ruffle Hem" th:utext="${p.name}" class="cdt-product__name"></a>
